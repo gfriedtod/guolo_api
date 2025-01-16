@@ -1,15 +1,18 @@
 package com.api.guolo_api.userManagement.domain.model;
 
+import com.api.guolo_api.Entity.LotteryStatus;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.OffsetDateTime;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -20,7 +23,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @Accessors(chain = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Builder
 public class LotterieDto implements Serializable {
     private UUID id;
     private OffsetDateTime createdAt;
@@ -28,5 +30,9 @@ public class LotterieDto implements Serializable {
     private LocalDate startedDate;
     private LocalDate endDate;
     private UserDto admin;
-    private String status;
+    private Double cashPrize;
+    private LotteryStatus status;
+    private LocalTime hour;
+    @JsonIgnoreProperties("lotterie")
+    private Set<TicketDto> tickets = new LinkedHashSet<>();
 }

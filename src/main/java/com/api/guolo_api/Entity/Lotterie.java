@@ -8,7 +8,10 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.OffsetDateTime;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -51,5 +54,13 @@ public class Lotterie {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", columnDefinition = "lotterystatus not null")
         private LotteryStatus status;
+
+    @ColumnDefault("'10:00:00'")
+    @Column(name = "hour")
+    private LocalTime hour;
+
+    @OneToMany(mappedBy = "lotterie")
+    private Set<Ticket> tickets = new LinkedHashSet<>();
+
 }
 

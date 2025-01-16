@@ -5,6 +5,7 @@ import com.api.guolo_api.authentication.domain.service.ClientService;
 import com.api.guolo_api.authentication.domain.service.UserAuthService;
 import com.api.guolo_api.authentication.infracsturcture.out.adapter.UserAuthPersistenceAdapter;
 import com.api.guolo_api.authentication.infracsturcture.out.persitence.repository.UserAuthRepository;
+import com.api.guolo_api.mail.domain.service.MaileService;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,8 +26,8 @@ public class Config {
     }
 
     @Bean
-    UserAuthService userService(UserAuthPersistenceAdapter userAuthPersistenceAdapter, PasswordEncoder passwordEncoder){
-        return  new UserAuthService(userAuthPersistenceAdapter,passwordEncoder);
+    UserAuthService userService(UserAuthPersistenceAdapter userAuthPersistenceAdapter, PasswordEncoder passwordEncoder, MaileService maileService){
+        return  new UserAuthService(userAuthPersistenceAdapter,passwordEncoder,maileService);
     }
 
     @Bean

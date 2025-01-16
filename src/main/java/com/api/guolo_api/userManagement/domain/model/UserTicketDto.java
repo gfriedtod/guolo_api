@@ -11,18 +11,16 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 
 /**
- * DTO for {@link com.api.guolo_api.Entity.User}
+ * DTO for {@link com.api.guolo_api.Entity.UserTicket}
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserDto implements Serializable {
+public class UserTicketDto implements Serializable {
     private UUID id;
     private OffsetDateTime createdAt;
-    private String name;
-    private String password;
-    private String role;
-    private String email;
+    private TicketDto ticket;
+    private UserDto user;
 }
