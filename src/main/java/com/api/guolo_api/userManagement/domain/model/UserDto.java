@@ -20,7 +20,7 @@ import java.util.UUID;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserDto implements Serializable {
     private UUID id;
-    private OffsetDateTime createdAt;
+//    private OffsetDateTime createdAt;
     private String name;
     private String password;
     private String role;

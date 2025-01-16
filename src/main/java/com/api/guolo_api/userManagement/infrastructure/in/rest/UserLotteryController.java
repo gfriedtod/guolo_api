@@ -1,12 +1,10 @@
 package com.api.guolo_api.userManagement.infrastructure.in.rest;
 
+import com.api.guolo_api.adminMangement.domain.model.BuyTicketRequest;
 import com.api.guolo_api.userManagement.application.in.UserLotteryUseCase;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -22,9 +20,11 @@ public class UserLotteryController {
         try {
             return ResponseEntity.ok(userLotteryUseCase.fetchAll());
         } catch (Exception e) {
+
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
 
 
 

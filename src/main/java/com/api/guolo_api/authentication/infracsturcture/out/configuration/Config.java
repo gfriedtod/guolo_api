@@ -1,6 +1,8 @@
 package com.api.guolo_api.authentication.infracsturcture.out.configuration;
 
 
+import com.api.guolo_api.Entity.Ticket;
+import com.api.guolo_api.adminMangement.domain.model.TicketDto;
 import com.api.guolo_api.authentication.domain.service.ClientService;
 import com.api.guolo_api.authentication.domain.service.UserAuthService;
 import com.api.guolo_api.authentication.infracsturcture.out.adapter.UserAuthPersistenceAdapter;
@@ -32,7 +34,29 @@ public class Config {
 
     @Bean
     ModelMapper mapper(){
-        return  new ModelMapper();
+        ModelMapper modelMapper = new ModelMapper();
+//
+//        modelMapper.getConfiguration()
+//                .setSkipNullEnabled(true)
+//                .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PUBLIC)
+//                .setFieldMatchingEnabled(true);
+//
+//
+//        modelMapper.createTypeMap(
+//
+//                com.api.guolo_api.userManagement.domain.model.TicketDto.class,
+//                com.api.guolo_api.Entity.Ticket.class
+//
+//        ).addMapping(
+//                com.api.guolo_api.userManagement.domain.model.TicketDto::getId,
+//                (Ticket ticket, TicketDto ticketDto) -> ticketDto.setId(ticket.getId().getId())
+//        ).addMapping(
+//                com.api.guolo_api.userManagement.domain.model.TicketDto::getNumber,
+//                (Ticket ticket, TicketDto ticketDto) -> ticketDto.setNumber(ticket.getId().getNumber())
+//        )
+//
+//        ;
+        return  modelMapper;
     }
 
 }
