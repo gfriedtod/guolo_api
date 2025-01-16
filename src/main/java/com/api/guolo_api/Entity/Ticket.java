@@ -18,7 +18,7 @@ public class Ticket {
     private TicketId id;
 
     @ColumnDefault("now()")
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at", nullable = true)
     private OffsetDateTime createdAt;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -30,4 +30,11 @@ public class Ticket {
     @Column(name = "price", nullable = false)
     private Double price;
 
+/*
+ TODO [Reverse Engineering] create field to map the 'status' column
+ Available actions: Define target Java type | Uncomment as is | Remove column mapping
+   */
+@Enumerated(EnumType.STRING)
+    @Column(name = "status", columnDefinition = "ticketstatus")
+    private TicketStatus status;
 }

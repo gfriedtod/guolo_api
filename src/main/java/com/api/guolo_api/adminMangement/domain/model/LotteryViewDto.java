@@ -1,7 +1,5 @@
 package com.api.guolo_api.adminMangement.domain.model;
 
-import com.api.guolo_api.userManagement.domain.model.LotterieDto;
-import com.api.guolo_api.userManagement.domain.model.TicketIdDto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,11 +8,10 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.time.OffsetDateTime;
 import java.util.UUID;
 
 /**
- * DTO for {@link com.api.guolo_api.Entity.Ticket}
+ * DTO for {@link com.api.guolo_api.Entity.LotteryView}
  */
 @Data
 @AllArgsConstructor
@@ -22,10 +19,11 @@ import java.util.UUID;
 @Accessors(chain = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Builder
-public class TicketDto implements Serializable {
-    private Long id;
-    private Short number;
-    private OffsetDateTime createdAt;
-    private LotterieDto lotterie;
-    private Double price;
+public class LotteryViewDto implements Serializable {
+    private UUID id;
+    private String name;
+    private String status;
+    private Double cashPrize;
+    private Long nbreTicker;
+    private Long totalSale;
 }

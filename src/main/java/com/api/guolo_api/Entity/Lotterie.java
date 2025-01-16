@@ -18,7 +18,7 @@ import java.util.UUID;
 public class Lotterie {
     @Id
     @ColumnDefault("gen_random_uuid()")
-    @Column(name = "id", nullable = false)
+    @Column(name = "id", nullable = true)
     private UUID id;
 
     @ColumnDefault("now()")
@@ -40,7 +40,16 @@ public class Lotterie {
     @JoinColumn(name = "admin")
     private User admin;
 
-    @Column(name = "status", nullable = false, length = Integer.MAX_VALUE)
-    private String status;
+    @ColumnDefault("'0'")
+    @Column(name = "cash_prize")
+    private Double cashPrize;
 
+/*
+ TODO [Reverse Engineering] create field to map the 'status' column
+ Available actions: Define target Java type | Uncomment as is | Remove column mapping
+   */
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", columnDefinition = "lotterystatus not null")
+        private LotteryStatus status;
 }
+

@@ -9,6 +9,7 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.OffsetDateTime;
+import java.util.UUID;
 
 /**
  * DTO for {@link com.api.guolo_api.Entity.Ticket}
@@ -20,7 +21,8 @@ import java.time.OffsetDateTime;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Builder
 public class TicketDto implements Serializable {
-    private TicketIdDto id;
+    private Long id;
+    private Short number;
     private OffsetDateTime createdAt;
     private LotterieDto lotterie;
     private Double price;
