@@ -17,9 +17,6 @@ public class Ticket {
     @EmbeddedId
     private TicketId id;
 
-    @ColumnDefault("now()")
-    @Column(name = "created_at", nullable = true)
-    private OffsetDateTime createdAt;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)

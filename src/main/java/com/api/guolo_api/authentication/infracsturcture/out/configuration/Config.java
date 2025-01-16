@@ -11,8 +11,9 @@ import com.api.guolo_api.mail.domain.service.MaileService;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
+@EnableJpaAuditing
 @Configuration
 public class Config {
 

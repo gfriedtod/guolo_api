@@ -24,10 +24,6 @@ public class Lotterie {
     @Column(name = "id", nullable = true)
     private UUID id;
 
-    @ColumnDefault("now()")
-    @Column(name = "created_at", nullable = false)
-    private OffsetDateTime createdAt;
-
     @Column(name = "name", nullable = false, length = Integer.MAX_VALUE)
     private String name;
 

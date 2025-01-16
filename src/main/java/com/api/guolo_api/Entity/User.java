@@ -5,6 +5,8 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.OffsetDateTime;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -34,4 +36,8 @@ public class User {
     private String role;
     @Column(name = "email", columnDefinition = "email")
     private String email;
+
+    @OneToMany(mappedBy = "user")
+    private Set<UserTicket> userTickets = new LinkedHashSet<>();
+
 }

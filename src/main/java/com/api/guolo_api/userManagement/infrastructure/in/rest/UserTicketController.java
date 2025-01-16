@@ -26,12 +26,24 @@ public class UserTicketController {
         }
     }
 
+    @GetMapping("running/{userId}")
+    public ResponseEntity<?> getAllRunningTickets(@PathVariable UUID userId) {
+        try {
+            return ResponseEntity.ok(userTicketUseCase.fetchUserId(userId));
+        } catch (Exception e) {
+            log.error(e.toString());
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+
 
     @PostMapping("/buy")
     public ResponseEntity<?> buyTicket(@RequestBody BuyTicketRequest request) {
         try {
             return ResponseEntity.ok(userTicketUseCase.buyTicket(request));
         } catch (Exception e) {
+            log.error(e.toString());
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

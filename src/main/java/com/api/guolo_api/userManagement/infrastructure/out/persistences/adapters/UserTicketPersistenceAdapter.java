@@ -3,6 +3,7 @@ package com.api.guolo_api.userManagement.infrastructure.out.persistences.adapter
 import com.api.guolo_api.Entity.*;
 import com.api.guolo_api.userManagement.domain.model.BuyTicketRequest;
 import com.api.guolo_api.userManagement.domain.model.LotterieDto;
+import com.api.guolo_api.userManagement.domain.model.LotteryTicket;
 import com.api.guolo_api.userManagement.domain.model.TicketDto;
 import com.api.guolo_api.userManagement.infrastructure.out.persistences.repository.UserUserUserTicketRepository;
 import com.api.guolo_api.userManagement.application.out.UserTicketOutputPort;
@@ -12,6 +13,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,7 +26,7 @@ public class UserTicketPersistenceAdapter implements UserTicketOutputPort {
     private final ModelMapper mapper;
 
     @Override
-    public TicketDto buyTicket(BuyTicketRequest request) {
+    public List<TicketDto> buyTicket(BuyTicketRequest request) {
 
         TicketId id = new TicketId();
         for (TicketDto ticketDto : request.getTicketDtos()) {
@@ -45,28 +47,27 @@ public class UserTicketPersistenceAdapter implements UserTicketOutputPort {
                 throw new RuntimeException("Ticket not found");
             }
         }
-//        id.setId(request.getTicketDtos().getId());
-//        id.setNumber(request.getTicketDtos().getNumber());
-//        Ticket ticket= ticketRepository.findById(id).orElse(null);
-//        if(ticket!=null){
-//            ticket.setStatus(TicketStatus.sold);
-//            ticket = ticketRepository.save(ticket);
-//
-//            userUserUserTicketRepository.save(
-//                    UserTicket.builder()
-//                            .user(mapper.map(request.getUserDto(), User.class))
-//                            .ticket(ticket)
-//                            .build()
-//            );
-//        }else{
-//            throw new RuntimeException("Ticket not found");
-//        }
-        return null;
+
+        return request.getTicketDtos();
     }
 
     @Override
-    public List<TicketDto> fetchByLotteryId(UUID lotteryId) {
-        return  ticketRepository.findByLotterieIdAndStatus(lotteryId,TicketStatus.pending).stream().map((element) -> mapper.map(element, TicketDto.class)).toList();
+    public List<LotteryTicket> fetchByUserId(UUID userId) {
+        List<LotteryTicket> list = new ArrayList<>();
+        var tickets  =  userUserUserTicketRepository.findByUserIdAndTicketLotterieStatus(userId,LotteryStatus.created).stream().map((element) -> mapper.map(element, UserTicket.class)).toList();
+        tickets.forEach(element -> {
+
+            UUID ids = element.getTicket().getLotterie().getId();
+        var   elTickets = tickets.stream().filter(sub -> sub.getTicket().getLotterie().getId().equals(ids)).toList();
+                    list.add(LotteryTicket.builder().tickets(elTickets.stream().map(sub2 -> TicketDto.builder().id(sub2.getTicket().getId().getId()).number(sub2.getTicket().getId().getNumber()).price(sub2.getTicket().getPrice()).status(sub2.getTicket().getStatus()).build()).toList()).lotterieDto(mapper.map(element.getTicket().getLotterie(), LotterieDto.class)).build());
+
+
+
+                }
+
+
+                );
+        return list;
     }
 
     @Override
