@@ -13,9 +13,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Component
 @AllArgsConstructor
@@ -54,19 +52,20 @@ public class UserTicketPersistenceAdapter implements UserTicketOutputPort {
     @Override
     public List<LotteryTicket> fetchByUserId(UUID userId) {
         List<LotteryTicket> list = new ArrayList<>();
+        HashSet<Object> id = new HashSet<>();
         var tickets  =  userUserUserTicketRepository.findByUserIdAndTicketLotterieStatus(userId,LotteryStatus.created).stream().map((element) -> mapper.map(element, UserTicket.class)).toList();
         tickets.forEach(element -> {
+            id.add(element.getTicket().getLotterie().getId()
+            );
+        });
+        id.forEach(
+                ids->{
 
-            UUID ids = element.getTicket().getLotterie().getId();
-        var   elTickets = tickets.stream().filter(sub -> sub.getTicket().getLotterie().getId().equals(ids)).toList();
-                    list.add(LotteryTicket.builder().tickets(elTickets.stream().map(sub2 -> TicketDto.builder().id(sub2.getTicket().getId().getId()).number(sub2.getTicket().getId().getNumber()).price(sub2.getTicket().getPrice()).status(sub2.getTicket().getStatus()).build()).toList()).lotterieDto(mapper.map(element.getTicket().getLotterie(), LotterieDto.class)).build());
-
-
+                    var   elTickets = tickets.stream().filter(sub -> sub.getTicket().getLotterie().getId().equals(ids)).toList();
+                    list.add(LotteryTicket.builder().tickets(elTickets.stream().map(sub2 -> TicketDto.builder().id(sub2.getTicket().getId().getId()).number(sub2.getTicket().getId().getNumber()).price(sub2.getTicket().getPrice()).status(sub2.getTicket().getStatus()).build()).toList()).lotterieDto(mapper.map(elTickets.getFirst().getTicket().getLotterie(), LotterieDto.class)).build());
 
                 }
-
-
-                );
+        );
         return list;
     }
 
