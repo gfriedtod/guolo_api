@@ -1,8 +1,8 @@
 package com.api.guolo_api.adminMangement.infrastructure.out.persistences.adapters;
 
 import com.api.guolo_api.Entity.Lotterie;
+import com.api.guolo_api.Entity.LotteryStatus;
 import com.api.guolo_api.Entity.Ticket;
-import com.api.guolo_api.Entity.TicketId;
 import com.api.guolo_api.Entity.User;
 import com.api.guolo_api.adminMangement.application.out.LotterieOutputPort;
 import com.api.guolo_api.adminMangement.domain.model.LotteryViewDto;
@@ -14,7 +14,6 @@ import com.api.guolo_api.adminMangement.domain.model.LotterieDto;
 import com.api.guolo_api.adminMangement.infrastructure.out.persistences.repository.TicketRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
@@ -39,15 +38,14 @@ public class LotteriePersistencesAdapter implements LotterieOutputPort {
     public LotterieDto save(LotterieDto lotterieDto) {
         System.out.println(lotterieDto.getTickets().toArray().length);
         var lotterie = lotteryMapperToEntity(lotterieDto);
+        lotterie.setStatus(LotteryStatus.created);
         lotterie =  lotterieRepository.save(lotterie);
         Lotterie finalLotterie = lotterie;
      var  tickets =  ticketRepository.saveAll(
                 lotterieDto.getTickets().stream().map(
                         (element) -> Ticket.builder()
-                                .id(TicketId.builder()
-                                        .id(element.getId())
-                                        .number(element.getNumber())
-                                        .build())
+                                .id(element.getId())
+                                .number(element.getNumber())
                                 .price(element.getPrice())
                                 .lotterie(finalLotterie)
                                 .build()
@@ -70,8 +68,8 @@ public class LotteriePersistencesAdapter implements LotterieOutputPort {
                 .tickets(
                         lotterie.getTickets().stream().map(
                                 (element) -> TicketDto.builder()
-                                        .id(element.getId().getId())
-                                        .number(element.getId().getNumber())
+                                        .id(element.getId())
+                                        .number(element.getNumber())
                                         .price(element.getPrice())
                                         .build()
                         ).collect(Collectors.toSet())
@@ -100,10 +98,8 @@ public class LotteriePersistencesAdapter implements LotterieOutputPort {
         ticketRepository.saveAll(
                 lotterieDto.getTickets().stream().map(
                         (element) -> Ticket.builder()
-                                .id(TicketId.builder()
-                                        .id(element.getId())
-                                        .number(element.getNumber())
-                                        .build())
+                                .id(element.getId())
+                                .number(element.getNumber())
                                 .price(element.getPrice())
                                 .lotterie(finalLotterie)
                                 .build()

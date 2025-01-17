@@ -5,8 +5,6 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.OffsetDateTime;
-import java.util.LinkedHashSet;
-import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -19,8 +17,9 @@ import java.util.UUID;
 public class User {
     @Id
     @ColumnDefault("gen_random_uuid()")
-    @Column(name = "id", nullable = true)
+    @Column(name = "id", nullable = false)
     @GeneratedValue
+
     private UUID id;
 
     @ColumnDefault("now()")
@@ -34,10 +33,12 @@ public class User {
     private String password;
     @Column(name = "role", length = Integer.MAX_VALUE)
     private String role;
+
+/*
+ TODO [Reverse Engineering] create field to map the 'email' column
+
+ Available actions: Define target Java type | Uncomment as is | Remove column mapping
+ */
     @Column(name = "email", columnDefinition = "email")
     private String email;
-
-    @OneToMany(mappedBy = "user")
-    private Set<UserTicket> userTickets = new LinkedHashSet<>();
-
 }

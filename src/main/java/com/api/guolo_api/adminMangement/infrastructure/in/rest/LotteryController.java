@@ -21,8 +21,8 @@ public class LotteryController {
         try{
             return ResponseEntity.ok(lotterieUseCase.fetchAll());
         } catch (Exception e){
-            log.error(e.toString());
-            return ResponseEntity.badRequest().body(e.getMessage());
+            throw e;
+//            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -31,9 +31,7 @@ public class LotteryController {
         try{
             return ResponseEntity.ok(lotterieUseCase.save(lotterieDto));
         } catch (Exception e){
-            log.error(e.toString());
-            throw e;
-
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 

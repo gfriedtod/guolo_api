@@ -23,9 +23,11 @@ import java.util.UUID;
 public class Lotterie {
     @Id
     @ColumnDefault("gen_random_uuid()")
-    @Column(name = "id", nullable = true)
     @GeneratedValue
+    @Column(name = "id", nullable = false)
     private UUID id;
+
+
 
     @Column(name = "name", nullable = false, length = Integer.MAX_VALUE)
     private String name;
@@ -46,20 +48,18 @@ public class Lotterie {
     @Column(name = "cash_prize")
     private Double cashPrize;
 
-/*
- TODO [Reverse Engineering] create field to map the 'status' column
- Available actions: Define target Java type | Uncomment as is | Remove column mapping
-   */
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status", columnDefinition = "lotterystatus not null")
-        private LotteryStatus status;
-
     @ColumnDefault("'10:00:00'")
     @Column(name = "hour")
     private LocalTime hour;
-
-    @OneToMany(mappedBy = "lotterie",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "lotterie")
     private Set<Ticket> tickets = new LinkedHashSet<>();
 
-}
+/*
+ TODO [Reverse Engineering] create field to map the 'status' column
+ Available actions: Define target Java type | Uncomment as is | Remove column mapping
+    */
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", columnDefinition = "lotterystatus not null")
+    private LotteryStatus status;
+}

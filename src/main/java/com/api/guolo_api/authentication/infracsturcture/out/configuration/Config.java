@@ -1,8 +1,6 @@
 package com.api.guolo_api.authentication.infracsturcture.out.configuration;
 
 
-import com.api.guolo_api.Entity.Ticket;
-import com.api.guolo_api.adminMangement.domain.model.TicketDto;
 import com.api.guolo_api.authentication.domain.service.ClientService;
 import com.api.guolo_api.authentication.domain.service.UserAuthService;
 import com.api.guolo_api.authentication.infracsturcture.out.adapter.UserAuthPersistenceAdapter;

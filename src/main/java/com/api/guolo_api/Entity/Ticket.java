@@ -6,21 +6,31 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.time.OffsetDateTime;
+import java.util.UUID;
+
 @Getter
 @Setter
 @Entity
+@Table(name = "ticket")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "ticket")
 public class Ticket {
-    @EmbeddedId
-    private TicketId id;
+    @Id
+    @ColumnDefault("gen_random_uuid()")
+    @Column(name = "id", nullable = false)
+    @GeneratedValue
+    private UUID id;
+
+
+    @Column(name = "number", nullable = false)
+    private Short number;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @ColumnDefault("gen_random_uuid()")
-    @JoinColumn(name = "lotterie", nullable = true)
+    @JoinColumn(name = "lotterie", nullable = false)
     private Lotterie lotterie;
 
     @Column(name = "price", nullable = false)
@@ -28,10 +38,10 @@ public class Ticket {
 
 /*
  TODO [Reverse Engineering] create field to map the 'status' column
+
  Available actions: Define target Java type | Uncomment as is | Remove column mapping
-   */
-@Enumerated(EnumType.STRING)
+ */
+    @ColumnDefault("'pending'")
     @Column(name = "status", columnDefinition = "ticketstatus")
     private TicketStatus status;
-
 }

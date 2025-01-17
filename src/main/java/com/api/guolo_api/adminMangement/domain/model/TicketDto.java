@@ -21,7 +21,7 @@ import java.util.UUID;
 @AllArgsConstructor(onConstructor = @__({@Deprecated}),access = AccessLevel.PUBLIC)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class TicketDto implements Serializable {
-    private Long id;
+    private UUID id;
     private Short number;
     @JsonIgnoreProperties("tickets")
     @EqualsAndHashCode.Exclude

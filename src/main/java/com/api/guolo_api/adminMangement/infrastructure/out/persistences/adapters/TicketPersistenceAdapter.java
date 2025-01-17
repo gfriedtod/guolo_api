@@ -24,9 +24,7 @@ public class TicketPersistenceAdapter implements TicketOutputPort {
     @Override
     public TicketDto buyTicket(BuyTicketRequest request) {
 
-        TicketId id = new TicketId();
-        id.setId(request.getTicketDto().getId());
-        id.setNumber(request.getTicketDto().getNumber());
+        var id = request.getTicketDto().getId();
         Ticket ticket= ticketRepository.findById(id).orElse(null);
         if(ticket!=null){
             ticket.setStatus(TicketStatus.sold);

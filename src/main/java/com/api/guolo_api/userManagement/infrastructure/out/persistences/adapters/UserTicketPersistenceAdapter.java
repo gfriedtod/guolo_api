@@ -26,11 +26,8 @@ public class UserTicketPersistenceAdapter implements UserTicketOutputPort {
     @Override
     public List<TicketDto> buyTicket(BuyTicketRequest request) {
 
-        TicketId id = new TicketId();
         for (TicketDto ticketDto : request.getTicketDtos()) {
-            id.setId(ticketDto.getId());
-            id.setNumber(ticketDto.getNumber());
-            Ticket ticket= ticketRepository.findById(id).orElse(null);
+            Ticket ticket= ticketRepository.findById(ticketDto.getId()).orElse(null);
             if(ticket!=null){
                 ticket.setStatus(TicketStatus.sold);
                 ticket = ticketRepository.save(ticket);
@@ -62,7 +59,7 @@ public class UserTicketPersistenceAdapter implements UserTicketOutputPort {
                 ids->{
 
                     var   elTickets = tickets.stream().filter(sub -> sub.getTicket().getLotterie().getId().equals(ids)).toList();
-                    list.add(LotteryTicket.builder().tickets(elTickets.stream().map(sub2 -> TicketDto.builder().id(sub2.getTicket().getId().getId()).number(sub2.getTicket().getId().getNumber()).price(sub2.getTicket().getPrice()).status(sub2.getTicket().getStatus()).build()).toList()).lotterieDto(mapper.map(elTickets.getFirst().getTicket().getLotterie(), LotterieDto.class)).build());
+                    list.add(LotteryTicket.builder().tickets(elTickets.stream().map(sub2 -> TicketDto.builder().id(sub2.getTicket().getId()).number(sub2.getTicket().getNumber()).price(sub2.getTicket().getPrice()).status(sub2.getTicket().getStatus()).build()).toList()).lotterieDto(mapper.map(elTickets.getFirst().getTicket().getLotterie(), LotterieDto.class)).build());
 
                 }
         );
@@ -78,8 +75,8 @@ public class UserTicketPersistenceAdapter implements UserTicketOutputPort {
         for(int i = 1; i <= numberMax; i++) {
             int randomIndex = (int) (Math.random() * tickets.size());
             TicketDto ticketDto = TicketDto.builder().
-                    id(tickets.get(randomIndex).getId().getId())
-                    .number(tickets.get(randomIndex).getId().getNumber())
+                    id(tickets.get(randomIndex).getId())
+                    .number(tickets.get(randomIndex).getNumber())
                             .lotterie(LotterieDto.builder().id(tickets.get(randomIndex).getLotterie().getId()).name(tickets.get(randomIndex).getLotterie().getName()).cashPrize(tickets.get(randomIndex).getLotterie().getCashPrize()).hour(tickets.get(randomIndex).getLotterie().getHour()).status(tickets.get(randomIndex).getLotterie().getStatus()).endDate(tickets.get(randomIndex).getLotterie().getEndDate()).startedDate(tickets.get(randomIndex).getLotterie().getStartedDate()).startedDate(tickets.get(randomIndex).getLotterie().getStartedDate()).build())
                     .price(tickets.get(randomIndex).getPrice())
                     .status(tickets.get(randomIndex).getStatus())

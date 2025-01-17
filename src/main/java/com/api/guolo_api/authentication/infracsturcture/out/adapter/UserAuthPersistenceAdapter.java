@@ -13,8 +13,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
-import java.time.ZoneId;
-import java.util.Date;
 
 public class UserAuthPersistenceAdapter implements UserOutputPort {
 
