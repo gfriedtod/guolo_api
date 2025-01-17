@@ -6,7 +6,7 @@ import com.api.guolo_api.adminMangement.domain.model.LotteryViewDto;
 import com.api.guolo_api.adminMangement.domain.model.TicketDto;
 import com.api.guolo_api.adminMangement.infrastructure.out.persistences.repository.LotterieRepository;
 import com.api.guolo_api.adminMangement.infrastructure.out.persistences.repository.LotteryViewRepository;
-import com.api.guolo_api.userManagement.domain.model.LotterieDto;
+import com.api.guolo_api.adminMangement.domain.model.LotterieDto;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -29,7 +29,7 @@ public class LotteriePersistencesAdapter implements LotterieOutputPort {
 
     @Override
     public LotterieDto save(LotterieDto lotterieDto) {
-
+        System.out.println(lotterieDto.getTickets().toArray().length);
         return mapper.map(lotterieRepository.save(mapper.map(lotterieDto, Lotterie.class)), LotterieDto.class);
     }
 

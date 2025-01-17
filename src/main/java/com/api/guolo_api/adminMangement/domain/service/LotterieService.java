@@ -3,7 +3,7 @@ package com.api.guolo_api.adminMangement.domain.service;
 import com.api.guolo_api.adminMangement.application.in.LotterieUseCase;
 import com.api.guolo_api.adminMangement.application.out.LotterieOutputPort;
 import com.api.guolo_api.adminMangement.domain.model.LotteryViewDto;
-import com.api.guolo_api.userManagement.domain.model.LotterieDto;
+import com.api.guolo_api.adminMangement.domain.model.LotterieDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

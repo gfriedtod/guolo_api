@@ -1,7 +1,7 @@
 package com.api.guolo_api.adminMangement.infrastructure.in.rest;
 
 import com.api.guolo_api.adminMangement.application.in.LotterieUseCase;
-import com.api.guolo_api.userManagement.domain.model.LotterieDto;
+import com.api.guolo_api.adminMangement.domain.model.LotterieDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +21,7 @@ public class LotteryController {
         try{
             return ResponseEntity.ok(lotterieUseCase.fetchAll());
         } catch (Exception e){
+            log.error(e.toString());
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

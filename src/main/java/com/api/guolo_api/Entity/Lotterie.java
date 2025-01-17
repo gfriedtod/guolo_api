@@ -22,10 +22,11 @@ public class Lotterie {
     @Id
     @ColumnDefault("gen_random_uuid()")
     @Column(name = "id", nullable = true)
+    @GeneratedValue
     private UUID id;
 
     @ColumnDefault("now()")
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at", nullable = true)
     private OffsetDateTime createdAt;
 
     @Column(name = "name", nullable = false, length = Integer.MAX_VALUE)
@@ -59,7 +60,7 @@ public class Lotterie {
     @Column(name = "hour")
     private LocalTime hour;
 
-    @OneToMany(mappedBy = "lotterie")
+    @OneToMany(mappedBy = "lotterie",cascade = CascadeType.ALL)
     private Set<Ticket> tickets = new LinkedHashSet<>();
 
 }

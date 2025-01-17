@@ -2,7 +2,7 @@ package com.api.guolo_api.adminMangement.application.out;
 
 import com.api.guolo_api.adminMangement.domain.model.LotteryViewDto;
 import com.api.guolo_api.adminMangement.domain.model.TicketDto;
-import com.api.guolo_api.userManagement.domain.model.LotterieDto;
+import com.api.guolo_api.adminMangement.domain.model.LotterieDto;
 
 import java.util.List;
 import java.util.UUID;

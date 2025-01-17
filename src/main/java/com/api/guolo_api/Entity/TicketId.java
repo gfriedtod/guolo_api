@@ -2,6 +2,7 @@ package com.api.guolo_api.Entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.GeneratedValue;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.Hibernate;
@@ -15,6 +16,7 @@ import java.util.Objects;
 public class TicketId implements Serializable {
     private static final long serialVersionUID = -7253559621468122851L;
     @Column(name = "id", nullable = false)
+    @GeneratedValue
     private Long id;
 
     @Column(name = "number", nullable = false)
