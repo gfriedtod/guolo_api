@@ -3,6 +3,8 @@ package com.api.guolo_api.Entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
@@ -14,16 +16,13 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class UserTicket {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @ColumnDefault("gen_random_uuid()")
     @Column(name = "id", nullable = false)
     private UUID id;
-
-    @ColumnDefault("now()")
-    @Column(name = "created_at", nullable = false)
-    private OffsetDateTime createdAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumns({

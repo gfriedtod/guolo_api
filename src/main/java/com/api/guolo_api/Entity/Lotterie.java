@@ -26,7 +26,7 @@ public class Lotterie {
     private UUID id;
 
     @ColumnDefault("now()")
-    @Column(name = "created_at", nullable = true)
+    @Column(name = "created_at", nullable = false)
     private OffsetDateTime createdAt;
 
     @Column(name = "name", nullable = false, length = Integer.MAX_VALUE)

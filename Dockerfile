@@ -9,6 +9,8 @@ COPY gradle ./gradle
 COPY build.gradle settings.gradle ./
 COPY src ./src
 
+RUN chmod +x gradlew
+
 # Rendre gradlew exécutable et construire l'application
 RUN ./gradlew build --no-daemon
 

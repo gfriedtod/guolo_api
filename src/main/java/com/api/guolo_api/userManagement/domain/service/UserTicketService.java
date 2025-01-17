@@ -1,6 +1,7 @@
 package com.api.guolo_api.userManagement.domain.service;
 
 import com.api.guolo_api.userManagement.domain.model.BuyTicketRequest;
+import com.api.guolo_api.userManagement.domain.model.LotteryTicket;
 import com.api.guolo_api.userManagement.domain.model.TicketDto;
 import com.api.guolo_api.userManagement.application.in.UserTicketUseCase;
 import com.api.guolo_api.userManagement.application.out.UserTicketOutputPort;
@@ -17,13 +18,13 @@ public class UserTicketService implements UserTicketUseCase {
     private final UserTicketOutputPort ticketOutputPort;
 
     @Override
-    public TicketDto buyTicket(BuyTicketRequest request) {
+    public List<TicketDto> buyTicket(BuyTicketRequest request) {
         return ticketOutputPort.buyTicket(request);
     }
 
     @Override
-    public List<TicketDto> fetchByLotteryId(UUID lotteryId) {
-        return ticketOutputPort.fetchByLotteryId(lotteryId);
+    public List<LotteryTicket> fetchUserId(UUID lotteryId) {
+        return ticketOutputPort.fetchByUserId(lotteryId);
     }
 
     @Override
