@@ -7,8 +7,6 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import java.time.OffsetDateTime;
-
 @Getter
 @Setter
 @Entity
@@ -16,7 +14,6 @@ import java.time.OffsetDateTime;
 public class Ticket {
     @EmbeddedId
     private TicketId id;
-
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -34,4 +31,5 @@ public class Ticket {
 @Enumerated(EnumType.STRING)
     @Column(name = "status", columnDefinition = "ticketstatus")
     private TicketStatus status;
+
 }
