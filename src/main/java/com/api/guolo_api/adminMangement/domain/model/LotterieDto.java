@@ -1,8 +1,6 @@
 package com.api.guolo_api.adminMangement.domain.model;
 
 import com.api.guolo_api.Entity.LotteryStatus;
-import com.api.guolo_api.userManagement.domain.model.TicketDto;
-import com.api.guolo_api.userManagement.domain.model.UserDto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import lombok.experimental.Accessors;
@@ -25,7 +23,6 @@ import java.util.UUID;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Builder
 public class LotterieDto implements Serializable {
-    private OffsetDateTime createdAt;
     private UUID id;
     private String name;
     private LocalDate startedDate;

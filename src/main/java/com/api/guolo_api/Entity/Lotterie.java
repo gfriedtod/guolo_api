@@ -1,8 +1,7 @@
 package com.api.guolo_api.Entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -18,16 +17,15 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name = "lotterie")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Lotterie {
     @Id
     @ColumnDefault("gen_random_uuid()")
     @Column(name = "id", nullable = true)
     @GeneratedValue
     private UUID id;
-
-    @ColumnDefault("now()")
-    @Column(name = "created_at", nullable = false)
-    private OffsetDateTime createdAt;
 
     @Column(name = "name", nullable = false, length = Integer.MAX_VALUE)
     private String name;

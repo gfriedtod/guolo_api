@@ -3,8 +3,7 @@ package com.api.guolo_api.Entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.GeneratedValue;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.Hibernate;
 
 import java.io.Serializable;
@@ -13,10 +12,13 @@ import java.util.Objects;
 @Getter
 @Setter
 @Embeddable
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class TicketId implements Serializable {
     private static final long serialVersionUID = -7253559621468122851L;
     @Column(name = "id", nullable = false)
-    @GeneratedValue
+    @GeneratedValue(generator = "ticket_id_seq")
     private Long id;
 
     @Column(name = "number", nullable = false)
