@@ -42,6 +42,7 @@ public class Ticket {
  Available actions: Define target Java type | Uncomment as is | Remove column mapping
  */
     @ColumnDefault("'pending'")
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", columnDefinition = "ticketstatus")
     private TicketStatus status;
 }

@@ -27,6 +27,7 @@ public class UserTicketPersistenceAdapter implements UserTicketOutputPort {
     public List<TicketDto> buyTicket(BuyTicketRequest request) {
 
         for (TicketDto ticketDto : request.getTicketDtos()) {
+            System.out.println(ticketDto.getId());
             Ticket ticket= ticketRepository.findById(ticketDto.getId()).orElse(null);
             if(ticket!=null){
                 ticket.setStatus(TicketStatus.sold);
