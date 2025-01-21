@@ -1,9 +1,6 @@
 package com.api.guolo_api.adminMangement.infrastructure.out.persistences.adapters;
 
-import com.api.guolo_api.Entity.Lotterie;
-import com.api.guolo_api.Entity.LotteryStatus;
-import com.api.guolo_api.Entity.Ticket;
-import com.api.guolo_api.Entity.User;
+import com.api.guolo_api.Entity.*;
 import com.api.guolo_api.adminMangement.application.out.LotterieOutputPort;
 import com.api.guolo_api.adminMangement.domain.model.LotteryViewDto;
 import com.api.guolo_api.adminMangement.domain.model.TicketDto;
@@ -18,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -111,6 +109,27 @@ public class LotteriePersistencesAdapter implements LotterieOutputPort {
     @Override
     public List<TicketDto> fetchByLotteryId(UUID lotteryId) {
         return List.of();
+    }
+
+    @Override
+    public TicketDto draw(UUID lotteryId) {
+
+       List<Ticket> tickets = ticketRepository.findByLotterie_IdAndLotterie_Status(lotteryId, LotteryStatus.started);
+        Random random = new Random();
+        Ticket ticket = tickets.get(random.nextInt(tickets.size()));
+        ticket.setWinner(true);
+        Lotterie lotterie = ticket.getLotterie();
+        lotterie.setStatus(LotteryStatus.ended);
+        lotterieRepository.save(lotterie);
+        ticket = ticketRepository.save(ticket);
+        return TicketDto.builder().id(ticket.getId()).number(ticket.getNumber()).price(ticket.getPrice()).build() ;
+    }
+
+    @Override
+    public LotterieDto findById(UUID lotteryId) {
+
+       Lotterie lotterie = lotterieRepository.findById(lotteryId).get();
+        return lotteryMapperToDto(lotterie);
     }
 
     @Override

@@ -4,10 +4,12 @@ import com.api.guolo_api.adminMangement.application.in.LotterieUseCase;
 import com.api.guolo_api.adminMangement.application.out.LotterieOutputPort;
 import com.api.guolo_api.adminMangement.domain.model.LotteryViewDto;
 import com.api.guolo_api.adminMangement.domain.model.LotterieDto;
+import com.api.guolo_api.adminMangement.domain.model.TicketDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -29,7 +31,17 @@ public class LotterieService implements LotterieUseCase {
     }
 
     @Override
+    public LotterieDto findById(UUID lotteryId) {
+        return outputPort.findById(lotteryId);
+    }
+
+    @Override
     public LotterieDto delete(LotterieDto lotterieDto) {
         return outputPort.delete(lotterieDto);
+    }
+
+    @Override
+    public TicketDto draw(UUID lotteryId) {
+        return outputPort.draw(lotteryId);
     }
 }

@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("lottery")
@@ -49,6 +49,26 @@ public class LotteryController {
         try{
             return ResponseEntity.ok(lotterieUseCase.delete(lotterieDto));
         } catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("draw/{id}")
+    public ResponseEntity<?> draw(@PathVariable UUID id) {
+        try{
+            return ResponseEntity.ok(lotterieUseCase.draw(id));
+        } catch (Exception e){
+            log.error(e.toString());
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<?> getLottery(@PathVariable UUID id) {
+        try {
+            return ResponseEntity.ok(lotterieUseCase.findById(id));
+        } catch (Exception e) {
+            log.error(e.toString());
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

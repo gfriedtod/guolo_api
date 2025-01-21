@@ -28,4 +28,6 @@ public class TicketDto implements Serializable {
     private LotterieDto lotterie;
     private Double price;
     private TicketStatus status;
+    private Boolean winner = false;
+
 }

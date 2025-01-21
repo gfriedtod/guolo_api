@@ -13,6 +13,8 @@ public interface LotterieOutputPort {
     public LotterieDto save(LotterieDto lotterieDto);
     public LotterieDto update(LotterieDto lotterieDto);
     public List<TicketDto> fetchByLotteryId(UUID lotteryId);
+    public TicketDto draw(UUID lotteryId);
+    LotterieDto findById(UUID lotteryId);
 
     LotterieDto delete(LotterieDto lotterieDto);
 }

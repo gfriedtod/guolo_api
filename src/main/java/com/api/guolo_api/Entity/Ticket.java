@@ -45,4 +45,9 @@ public class Ticket {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", columnDefinition = "ticketstatus")
     private TicketStatus status;
+
+    @ColumnDefault("false")
+    @Column(name = "winner", nullable = false)
+    private Boolean winner = false;
+
 }
