@@ -46,6 +46,7 @@ public class LotteriePersistencesAdapter implements LotterieOutputPort {
                                 .number(element.getNumber())
                                 .price(element.getPrice())
                                 .lotterie(finalLotterie)
+                                .status(TicketStatus.pending)
                                 .winner(false)
                                 .build()
 
@@ -115,7 +116,7 @@ public class LotteriePersistencesAdapter implements LotterieOutputPort {
     @Override
     public TicketDto draw(UUID lotteryId) {
 
-       List<Ticket> tickets = ticketRepository.findByLotterie_IdAndLotterie_Status(lotteryId, LotteryStatus.started);
+       List<Ticket> tickets = ticketRepository.findByLotterie_IdAndLotterie_Status(lotteryId, LotteryStatus.created);
         Random random = new Random();
         Ticket ticket = tickets.get(random.nextInt(tickets.size()));
         ticket.setWinner(true);
@@ -123,7 +124,7 @@ public class LotteriePersistencesAdapter implements LotterieOutputPort {
         lotterie.setStatus(LotteryStatus.ended);
         lotterieRepository.save(lotterie);
         ticket = ticketRepository.save(ticket);
-        return TicketDto.builder().id(ticket.getId()).number(ticket.getNumber()).price(ticket.getPrice()).build() ;
+        return TicketDto.builder().id(ticket.getId()).number(ticket.getNumber()).price(ticket.getPrice()).winner(ticket.getWinner()).build() ;
     }
 
     @Override
