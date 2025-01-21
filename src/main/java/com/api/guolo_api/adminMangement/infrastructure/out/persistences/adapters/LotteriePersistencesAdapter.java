@@ -46,6 +46,7 @@ public class LotteriePersistencesAdapter implements LotterieOutputPort {
                                 .number(element.getNumber())
                                 .price(element.getPrice())
                                 .lotterie(finalLotterie)
+                                .winner(false)
                                 .build()
 
                 ).collect(Collectors.toList())

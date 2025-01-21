@@ -1,6 +1,7 @@
 package com.api.guolo_api.userManagement.infrastructure.out.persistences.adapters;
 
 import com.api.guolo_api.Entity.*;
+import com.api.guolo_api.userManagement.domain.model.UserDto;
 import com.api.guolo_api.userManagement.domain.model.BuyTicketRequest;
 import com.api.guolo_api.userManagement.domain.model.LotterieDto;
 import com.api.guolo_api.userManagement.domain.model.LotteryTicket;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
@@ -51,7 +53,7 @@ public class UserTicketPersistenceAdapter implements UserTicketOutputPort {
     public List<LotteryTicket> fetchByUserId(UUID userId) {
         List<LotteryTicket> list = new ArrayList<>();
         HashSet<Object> id = new HashSet<>();
-        var tickets  =  userUserUserTicketRepository.findByUserIdAndTicketLotterieStatus(userId,LotteryStatus.created).stream().map((element) -> mapper.map(element, UserTicket.class)).toList();
+        var tickets  =  userUserUserTicketRepository.findByUserId(userId).stream().map((element) -> mapper.map(element, UserTicket.class)).toList();
         tickets.forEach(element -> {
             id.add(element.getTicket().getLotterie().getId()
             );
@@ -60,11 +62,23 @@ public class UserTicketPersistenceAdapter implements UserTicketOutputPort {
                 ids->{
 
                     var   elTickets = tickets.stream().filter(sub -> sub.getTicket().getLotterie().getId().equals(ids)).toList();
-                    list.add(LotteryTicket.builder().tickets(elTickets.stream().map(sub2 -> TicketDto.builder().id(sub2.getTicket().getId()).number(sub2.getTicket().getNumber()).price(sub2.getTicket().getPrice()).status(sub2.getTicket().getStatus()).build()).toList()).lotterieDto(mapper.map(elTickets.getFirst().getTicket().getLotterie(), LotterieDto.class)).build());
+                    list.add(LotteryTicket.builder().tickets(elTickets.stream().map(sub2 -> TicketDto.builder().id(sub2.getTicket().getId()).number(sub2.getTicket().getNumber()).price(sub2.getTicket().getPrice()).status(sub2.getTicket().getStatus()).winner(sub2.getTicket().getWinner()).build()).toList()).lotterieDto(lotteryMapperToDto(elTickets.getFirst().getTicket().getLotterie())).build());
 
                 }
         );
         return list;
+    }
+
+    LotterieDto lotteryMapperToDto(Lotterie lotterie) {
+        return LotterieDto.builder()
+                .name(lotterie.getName())
+                .cashPrize(lotterie.getCashPrize())
+                .admin(mapper.map(lotterie.getAdmin(), UserDto.class))
+                .hour(lotterie.getHour())
+                .startedDate(lotterie.getStartedDate())
+                .endDate(lotterie.getEndDate())
+                .status(lotterie.getStatus())
+                .build();
     }
 
     @Override
@@ -87,6 +101,4 @@ public class UserTicketPersistenceAdapter implements UserTicketOutputPort {
         }
         return ticketDtos;
     }
-
-
 }

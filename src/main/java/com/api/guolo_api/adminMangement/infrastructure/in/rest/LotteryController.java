@@ -21,8 +21,8 @@ public class LotteryController {
         try{
             return ResponseEntity.ok(lotterieUseCase.fetchAll());
         } catch (Exception e){
-            throw e;
-//            return ResponseEntity.badRequest().body(e.getMessage());
+//            throw e;
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
