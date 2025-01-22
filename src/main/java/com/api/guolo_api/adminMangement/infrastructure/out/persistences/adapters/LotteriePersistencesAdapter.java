@@ -94,18 +94,6 @@ public class LotteriePersistencesAdapter implements LotterieOutputPort {
     public LotterieDto update(LotterieDto lotterieDto) {
         var lotterie = lotteryMapperToEntity(lotterieDto);
         lotterie =  lotterieRepository.save(lotterie);
-        Lotterie finalLotterie = lotterie;
-        ticketRepository.saveAll(
-                lotterieDto.getTickets().stream().map(
-                        (element) -> Ticket.builder()
-                                .id(element.getId())
-                                .number(element.getNumber())
-                                .price(element.getPrice())
-                                .lotterie(finalLotterie)
-                                .build()
-
-                ).collect(Collectors.toList())
-        );
         return lotteryMapperToDto(lotterie); }
 
     @Override
