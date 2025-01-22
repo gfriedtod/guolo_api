@@ -31,6 +31,15 @@ public class UserAuthPersistenceAdapter implements UserOutputPort {
     }
 
     @Override
+    public UserDto update(UserDto userDto) {
+        var user = UserMapper.toEntityWithoutDependencies(userDto);
+        user  = userRepository.findById(userDto.getId()).get();
+        user.setName(userDto.getName());
+        user.setEmail(userDto.getEmail());
+        return UserMapper.toDto(userRepository.save(user));
+    }
+
+    @Override
     public UserDto login(LoginRequest loginRequest) {
         var user = userRepository.findByEmail(loginRequest.getEmail());
         return user.map(user1 -> modelMapper.map(user1, UserDto.class)).orElse(null);

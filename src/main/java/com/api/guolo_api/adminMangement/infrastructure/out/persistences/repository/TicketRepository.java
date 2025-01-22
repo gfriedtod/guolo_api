@@ -17,4 +17,8 @@ public interface TicketRepository extends JpaRepository<Ticket, UUID> {
     Collection<Ticket> findByLotterieId(UUID lotteryId);
 
     List<Ticket> findByLotterie_IdAndLotterie_Status(UUID id, LotteryStatus status);
+
+    Optional<Ticket> findByLotterie_Tickets_WinnerTrue();
+
+    Optional<Ticket> findByLotterie_IdAndWinnerTrue(UUID id);
 }

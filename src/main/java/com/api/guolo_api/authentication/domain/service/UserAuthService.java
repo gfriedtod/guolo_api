@@ -63,5 +63,10 @@ public class UserAuthService implements UserAuthInput {
         }
     }
 
+    @Override
+    public UserDto update(UserDto userDto) {
+        return userOutputPort.update(userDto);
+    }
+
 
 }

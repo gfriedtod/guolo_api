@@ -1,5 +1,6 @@
 package com.api.guolo_api.userManagement.infrastructure.out.persistences.adapters;
 
+import com.api.guolo_api.Entity.LotteryStatus;
 import com.api.guolo_api.userManagement.application.out.UserLotteryOutputPort;
 import com.api.guolo_api.userManagement.domain.model.LotterieDto;
 import com.api.guolo_api.userManagement.infrastructure.out.persistences.repository.UserLotterieRepository;
@@ -19,6 +20,6 @@ public class UserUserLotteryPersistenceAdapter implements UserLotteryOutputPort 
 
     @Override
     public List<LotterieDto> fetchAll() {
-        return userLotterieRepository.findAll().stream().map((element) -> mapper.map(element, LotterieDto.class)).toList();
+        return userLotterieRepository.findByStatus(LotteryStatus.created).stream().map((element) -> mapper.map(element, LotterieDto.class)).toList();
     }
 }

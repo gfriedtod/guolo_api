@@ -51,6 +51,17 @@ public class AuthController {
         }
     }
 
+    @PutMapping("update")
+    ResponseEntity<?> update(@RequestBody UserDto userDto) {
+        try {
+            var res = this.userAuthService.update(userDto);
+            return ResponseEntity.ok(res);
 
+        } catch (Exception e) {
+            log.error("e: ", e);
+            return ResponseEntity.badRequest().body(e.getMessage());
+
+        }
+    }
 
 }

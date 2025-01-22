@@ -12,5 +12,6 @@ import java.util.Optional;
 public interface UserAuthInput {
 
     public UserDto create(SignupRequest signupRequest);
+        UserDto update(UserDto userDto);
     Optional<LoginUserResponse> login(LoginRequest loginRequest) throws NoSuchAlgorithmException;
 }

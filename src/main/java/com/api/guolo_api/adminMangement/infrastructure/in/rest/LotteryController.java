@@ -35,7 +35,7 @@ public class LotteryController {
         }
     }
 
-    @PatchMapping("")
+    @PutMapping("")
     public ResponseEntity<?> updateLottery(@RequestBody LotterieDto lotterieDto) {
         try{
             return ResponseEntity.ok(lotterieUseCase.update(lotterieDto));

@@ -8,6 +8,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 public interface UserOutputPort {
     UserDto loadUserByUsername(String username);
-   UserDto login(LoginRequest loginRequest);
+    UserDto update(UserDto userDto);
+
+    UserDto login(LoginRequest loginRequest);
    UserDto create(SignupRequest signupRequest, PasswordEncoder passwordEncoder);
 }

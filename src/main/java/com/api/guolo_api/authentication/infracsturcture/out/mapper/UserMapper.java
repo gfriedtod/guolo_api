@@ -32,11 +32,11 @@ public class UserMapper {
     public static User toEntityWithoutDependencies(UserDto user) {
         return User.builder()
                 .id(user.getId())
-                .createdAt(OffsetDateTime.from(user.getCreatedAt()))
+//                .createdAt(OffsetDateTime.from(user.getCreatedAt()))
                 .name(user.getName())
                 .email(user.getEmail())
-                .password(user.getPassword())
-                .role(user.getRole())
+//                .password(user.getPassword())
+//                .role(user.getRole())
                 .build();
     }
 }

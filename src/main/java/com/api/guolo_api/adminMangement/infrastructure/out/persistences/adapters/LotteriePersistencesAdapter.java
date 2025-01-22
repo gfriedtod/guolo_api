@@ -77,6 +77,17 @@ public class LotteriePersistencesAdapter implements LotterieOutputPort {
                 )
                 .build();
     }
+    private LotterieDto lotteryMapperToDtoWithOutTickets(Lotterie lotterie) {
+        return LotterieDto.builder()
+                .name(lotterie.getName())
+                .cashPrize(lotterie.getCashPrize())
+                .admin(mapper.map(lotterie.getAdmin(), UserDto.class))
+                .hour(lotterie.getHour())
+                .startedDate(lotterie.getStartedDate())
+                .endDate(lotterie.getEndDate())
+                .status(lotterie.getStatus())
+                .build();
+    }
 
     private Lotterie lotteryMapperToEntity(LotterieDto lotterieDto) {
         return Lotterie.builder()
@@ -94,7 +105,7 @@ public class LotteriePersistencesAdapter implements LotterieOutputPort {
     public LotterieDto update(LotterieDto lotterieDto) {
         var lotterie = lotteryMapperToEntity(lotterieDto);
         lotterie =  lotterieRepository.save(lotterie);
-        return lotteryMapperToDto(lotterie); }
+        return lotteryMapperToDtoWithOutTickets(lotterie); }
 
     @Override
     public List<TicketDto> fetchByLotteryId(UUID lotteryId) {
@@ -105,6 +116,12 @@ public class LotteriePersistencesAdapter implements LotterieOutputPort {
     public TicketDto draw(UUID lotteryId) {
 
        List<Ticket> tickets = ticketRepository.findByLotterie_IdAndLotterie_Status(lotteryId, LotteryStatus.created);
+
+       if(tickets.isEmpty()){
+        Ticket ticket  = ticketRepository.findByLotterie_IdAndWinnerTrue(lotteryId).orElse(null);
+           assert ticket != null;
+           return TicketDto.builder().id(ticket.getId()).number(ticket.getNumber()).price(ticket.getPrice()).winner(ticket.getWinner()).build() ;
+       }
         Random random = new Random();
         Ticket ticket = tickets.get(random.nextInt(tickets.size()));
         ticket.setWinner(true);
