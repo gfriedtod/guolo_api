@@ -91,6 +91,7 @@ public class LotteriePersistencesAdapter implements LotterieOutputPort {
 
     private Lotterie lotteryMapperToEntity(LotterieDto lotterieDto) {
         return Lotterie.builder()
+                .id(lotterieDto.getId())
                 .name(lotterieDto.getName())
                 .cashPrize(lotterieDto.getCashPrize())
                 .admin(mapper.map(lotterieDto.getAdmin(), User.class))
@@ -105,7 +106,8 @@ public class LotteriePersistencesAdapter implements LotterieOutputPort {
     public LotterieDto update(LotterieDto lotterieDto) {
         var lotterie = lotteryMapperToEntity(lotterieDto);
         lotterie =  lotterieRepository.save(lotterie);
-        return lotteryMapperToDtoWithOutTickets(lotterie); }
+                                                                                                                                                                                                    return lotteryMapperToDtoWithOutTickets(lotterie);
+    }
 
     @Override
     public List<TicketDto> fetchByLotteryId(UUID lotteryId) {
