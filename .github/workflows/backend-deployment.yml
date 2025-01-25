@@ -62,7 +62,7 @@ jobs:
             HOST: ${{ secrets.SSH_HOST }}
             USERNAME: ${{ secrets.SSH_USER }}
             PASSWORD: ${{ secrets.SSH_PASSWORD }}
-            source: ["docker-compose.yaml","init-scripts"]
+            source: "docker-compose.yaml,init-scripts"
             target: "guolo/"
         - uses: appleboy/ssh-action@v1.0.3
           name: Deploy the application
