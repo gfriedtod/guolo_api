@@ -3,6 +3,7 @@ package com.api.guolo_api.adminMangement.application.out;
 import com.api.guolo_api.adminMangement.domain.model.LotteryViewDto;
 import com.api.guolo_api.adminMangement.domain.model.TicketDto;
 import com.api.guolo_api.adminMangement.domain.model.LotterieDto;
+import com.api.guolo_api.adminMangement.domain.model.Winner;
 
 import java.util.List;
 import java.util.UUID;
@@ -13,7 +14,7 @@ public interface LotterieOutputPort {
     public LotterieDto save(LotterieDto lotterieDto);
     public LotterieDto update(LotterieDto lotterieDto);
     public List<TicketDto> fetchByLotteryId(UUID lotteryId);
-    public TicketDto draw(UUID lotteryId);
+    public Winner draw(UUID lotteryId);
     LotterieDto findById(UUID lotteryId);
 
     LotterieDto delete(LotterieDto lotterieDto);

@@ -46,5 +46,37 @@ jobs:
             tags: |
               ${{ secrets.DOCKERHUB_USERNAME }}/guolo_api:latest
 
+    deploy:
+
+      runs-on: ubuntu-latest
+      needs:
+        - docker-build
+      steps:
+        - uses: actions/checkout@v1
+        - name: List files
+          run: ls -al
+        #        - name: Check SSH key
+        #          run: echo "${{ secrets.SSH_KEY }}" | ssh-keygen -lf -
+        #
+        - name: Copy repository contents via scp
+          uses: appleboy/scp-action@master
+          with:
+            HOST: ${{ secrets.SSH_HOST }}
+            USERNAME: ${{ secrets.SSH_USER }}
+            PASSWORD: ${{ secrets.SSH_PASSWORD }}
+            source: "docker-compose.yaml"
+            target: "guolo/"
+        - uses: appleboy/ssh-action@v1.0.3
+          name: Deploy the application
+          with:
+            host: ${{ secrets.SSH_HOST }}
+            username: ${{ secrets.SSH_USER }}
+            password: ${{ secrets.SSH_PASSWORD }}
+            script: |
+              cd /guolo
+              docker-compose down
+              docker-compose pull
+              docker-compose up -d
+
 
 

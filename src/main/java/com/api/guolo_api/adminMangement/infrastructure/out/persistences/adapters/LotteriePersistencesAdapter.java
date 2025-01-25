@@ -2,21 +2,16 @@ package com.api.guolo_api.adminMangement.infrastructure.out.persistences.adapter
 
 import com.api.guolo_api.Entity.*;
 import com.api.guolo_api.adminMangement.application.out.LotterieOutputPort;
-import com.api.guolo_api.adminMangement.domain.model.LotteryViewDto;
-import com.api.guolo_api.adminMangement.domain.model.TicketDto;
-import com.api.guolo_api.adminMangement.domain.model.UserDto;
+import com.api.guolo_api.adminMangement.domain.model.*;
 import com.api.guolo_api.adminMangement.infrastructure.out.persistences.repository.LotterieRepository;
 import com.api.guolo_api.adminMangement.infrastructure.out.persistences.repository.LotteryViewRepository;
-import com.api.guolo_api.adminMangement.domain.model.LotterieDto;
 import com.api.guolo_api.adminMangement.infrastructure.out.persistences.repository.TicketRepository;
+import com.api.guolo_api.adminMangement.infrastructure.out.persistences.repository.UserTicketRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -26,6 +21,7 @@ public class LotteriePersistencesAdapter implements LotterieOutputPort {
     private final LotteryViewRepository lotteryViewRepository;
     private final ModelMapper mapper;
     private final TicketRepository ticketRepository;
+    private final UserTicketRepository userTicketRepository;
 
     @Override
     public List<LotteryViewDto> fetchAll() {
@@ -115,14 +111,14 @@ public class LotteriePersistencesAdapter implements LotterieOutputPort {
     }
 
     @Override
-    public TicketDto draw(UUID lotteryId) {
+    public Winner draw(UUID lotteryId) {
 
        List<Ticket> tickets = ticketRepository.findByLotterie_IdAndLotterie_Status(lotteryId, LotteryStatus.created);
 
        if(tickets.isEmpty()){
         Ticket ticket  = ticketRepository.findByLotterie_IdAndWinnerTrue(lotteryId).orElse(null);
            assert ticket != null;
-           return TicketDto.builder().id(ticket.getId()).number(ticket.getNumber()).price(ticket.getPrice()).winner(ticket.getWinner()).build() ;
+           return getWinner(ticket);
        }
         Random random = new Random();
         Ticket ticket = tickets.get(random.nextInt(tickets.size()));
@@ -131,13 +127,24 @@ public class LotteriePersistencesAdapter implements LotterieOutputPort {
         lotterie.setStatus(LotteryStatus.ended);
         lotterieRepository.save(lotterie);
         ticket = ticketRepository.save(ticket);
-        return TicketDto.builder().id(ticket.getId()).number(ticket.getNumber()).price(ticket.getPrice()).winner(ticket.getWinner()).build() ;
+        return getWinner(ticket);
+    }
+
+    private Winner getWinner(Ticket ticket) {
+        Optional<UserTicket> user  =   userTicketRepository.findByTicket_Id(ticket.getId());
+
+        if (user.isPresent()){
+            return Winner.builder().ticketDto(TicketDto.builder().id(ticket.getId()).number(ticket.getNumber()).price(ticket.getPrice()).winner(ticket.getWinner()).build()).userDto(mapper.map(user.get().getUser(), UserDto.class)).build();
+        }
+
+        return Winner.builder().ticketDto(TicketDto.builder().id(ticket.getId()).number(ticket.getNumber()).price(ticket.getPrice()).winner(ticket.getWinner()).build()).build() ;
     }
 
     @Override
     public LotterieDto findById(UUID lotteryId) {
 
-       Lotterie lotterie = lotterieRepository.findById(lotteryId).get();
+       Lotterie lotterie = lotterieRepository.findById(lotteryId).orElse(null);
+        assert lotterie != null;
         return lotteryMapperToDto(lotterie);
     }
 
