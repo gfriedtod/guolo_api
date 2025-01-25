@@ -5,6 +5,7 @@ import com.api.guolo_api.adminMangement.application.out.LotterieOutputPort;
 import com.api.guolo_api.adminMangement.domain.model.LotteryViewDto;
 import com.api.guolo_api.adminMangement.domain.model.LotterieDto;
 import com.api.guolo_api.adminMangement.domain.model.TicketDto;
+import com.api.guolo_api.adminMangement.domain.model.Winner;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +42,7 @@ public class LotterieService implements LotterieUseCase {
     }
 
     @Override
-    public TicketDto draw(UUID lotteryId) {
+    public Winner draw(UUID lotteryId) {
         return outputPort.draw(lotteryId);
     }
 }
