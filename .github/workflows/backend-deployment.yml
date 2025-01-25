@@ -71,7 +71,7 @@ jobs:
             username: ${{ secrets.SSH_USER }}
             password: ${{ secrets.SSH_PASSWORD }}
             script: |
-              cd /guolo
+              cd guolo
               docker-compose down
               docker-compose pull
               docker-compose up -d
