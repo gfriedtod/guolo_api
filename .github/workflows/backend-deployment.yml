@@ -59,9 +59,9 @@ jobs:
         - name: Copy repository contents via scp
           uses: appleboy/scp-action@master
           with:
-            host: ${{ secrets.SSH_HOST }}
-            username: ${{ secrets.SSH_USER }}
-            password: ${{ secrets.SSH_PASSWORD }}
+            HOST: ${{ secrets.SSH_HOST }}
+            USERNAME: ${{ secrets.SSH_USER }}
+            PASSWORD: ${{ secrets.SSH_PASSWORD }}
             source: "docker-compose.yaml"
             target: "guolo/"
         - uses: appleboy/ssh-action@v1.0.3
