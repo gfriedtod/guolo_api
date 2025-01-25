@@ -7,5 +7,6 @@ import lombok.Data;
 @Builder
 public class Winner {
     TicketDto ticketDto;
+
     UserDto userDto;
 }
