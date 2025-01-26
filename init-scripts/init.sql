@@ -1,28 +1,4 @@
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
-create sequence otp_id_seq;
-
-alter sequence otp_id_seq owner to postgres;
-
-alter sequence otp_id_seq owned by otp.id;
-
-grant select, update, usage on sequence otp_id_seq to anon;
-
-grant select, update, usage on sequence otp_id_seq to authenticated;
-
-grant select, update, usage on sequence otp_id_seq to service_role;
-
-create sequence user_ticket_id_seq;
-
-alter sequence user_ticket_id_seq owner to postgres;
-
-alter sequence user_ticket_id_seq owned by user_ticket.id;
-
-grant select, update, usage on sequence user_ticket_id_seq to anon;
-
-grant select, update, usage on sequence user_ticket_id_seq to authenticated;
-
-grant select, update, usage on sequence user_ticket_id_seq to service_role;
-
 create domain ticketstatus as varchar(255)
     constraint ticketstatus_check check ((VALUE)::text = ANY
                                          ((ARRAY ['pending'::character varying, 'sold'::character varying])::text[]));
