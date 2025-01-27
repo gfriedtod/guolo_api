@@ -42,7 +42,7 @@ public class MaileService {
                                 new JSONArray()
                                     .put(
                                         new JSONObject()
-                                            .put("Email", email.getTo())
+                                            .put("Email", "gemini.gfried@gmail.com")
                                             ))
                             .put(Emailv31.Message.SUBJECT, email.getSubject())
                             .put(Emailv31.Message.HTMLPART, email.getMessage())));
