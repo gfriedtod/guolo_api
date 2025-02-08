@@ -62,7 +62,8 @@ public class UserTicketPersistenceAdapter implements UserTicketOutputPort {
                 ids->{
 
                     var   elTickets = tickets.stream().filter(sub -> sub.getTicket().getLotterie().getId().equals(ids)).toList();
-                    list.add(LotteryTicket.builder().tickets(elTickets.stream().map(sub2 -> TicketDto.builder().id(sub2.getTicket().getId()).number(sub2.getTicket().getNumber()).price(sub2.getTicket().getPrice()).status(sub2.getTicket().getStatus()).winner(sub2.getTicket().getWinner()).build()).toList()).lotterieDto(lotteryMapperToDto(elTickets.getFirst().getTicket().getLotterie())).build());
+                    list.add(LotteryTicket.builder().
+                            tickets(elTickets.stream().map(sub2 -> TicketDto.builder().id(sub2.getTicket().getId()).number(sub2.getTicket().getNumber()).price(sub2.getTicket().getPrice()).status(sub2.getTicket().getStatus()).winner(sub2.getTicket().getWinner()).build()).toList()).lotterieDto(lotteryMapperToDto(elTickets.getFirst().getTicket().getLotterie())).build());
 
                 }
         );
@@ -71,6 +72,7 @@ public class UserTicketPersistenceAdapter implements UserTicketOutputPort {
 
     LotterieDto lotteryMapperToDto(Lotterie lotterie) {
         return LotterieDto.builder()
+                .id(lotterie.getId())
                 .name(lotterie.getName())
                 .cashPrize(lotterie.getCashPrize())
                 .admin(mapper.map(lotterie.getAdmin(), UserDto.class))
