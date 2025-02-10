@@ -24,10 +24,10 @@ public class PaymentProofAdapter implements PaymentProofOutputPort {
     @Override
     public void save(PaymentProofDto paymentProofDto) {
 
-        System.out.println(paymentProofDto.getIdLottery().getId());
         repository.save(PaymentProof.builder().
                         idLottery(Lotterie.builder().id(paymentProofDto.getIdLottery().getId()).build())
                                 .link(paymentProofDto.getLink())
+                        .name(paymentProofDto.getName())
                 .build());
 
     }

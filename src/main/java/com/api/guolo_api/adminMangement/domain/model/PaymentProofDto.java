@@ -23,4 +23,5 @@ public class PaymentProofDto implements Serializable {
     private UUID id;
     private String link;
     private LotterieDto idLottery;
+    private String name;
 }
