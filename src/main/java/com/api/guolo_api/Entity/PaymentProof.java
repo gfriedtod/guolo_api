@@ -27,4 +27,8 @@ public class PaymentProof {
     @JoinColumn(name = "id_lottery")
     private Lotterie idLottery;
 
+    @ColumnDefault("'preuve de paiement'")
+    @Column(name = "name", length = Integer.MAX_VALUE)
+    private String name;
+
 }
