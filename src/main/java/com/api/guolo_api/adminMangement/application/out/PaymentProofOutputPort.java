@@ -9,5 +9,5 @@ import java.util.UUID;
 public interface PaymentProofOutputPort {
 
     void save(PaymentProofDto paymentProofDto);
-    List<PaymentProof> findByIdLottery(UUID idLottery);
+    List<PaymentProofDto> findByIdLottery(UUID idLottery);
 }
