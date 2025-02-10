@@ -37,7 +37,7 @@ public class PaymentProofAdapter implements PaymentProofOutputPort {
      * @return List<PaymentProof>
      */
     @Override
-    public List<PaymentProof> findByIdLottery(UUID idLottery) {
-        return repository.findByIdLotteryId(idLottery);
+    public List<PaymentProofDto> findByIdLottery(UUID idLottery) {
+        return repository.findByIdLottery_Id(idLottery).get().stream().map((element) -> mapper.map(element, PaymentProofDto.class)).toList();
     }
 }

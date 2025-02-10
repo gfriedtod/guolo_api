@@ -29,7 +29,7 @@ public class PaymentProofService implements PaymentProofUseCase {
      * @return List<PaymentProof>
      */
     @Override
-    public List<PaymentProof> findByIdLottery(UUID idLottery) {
+    public List<PaymentProofDto> findByIdLottery(UUID idLottery) {
         return port.findByIdLottery(idLottery);
     }
 }

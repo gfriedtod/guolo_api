@@ -31,10 +31,10 @@ public class PaymentProofController {
     }
 
     @GetMapping("lottery/{id}")
-    public ResponseEntity<?> getPaymentProof(@PathVariable UUID id) {
+    public ResponseEntity<?> getPaymentProof(@PathVariable String id) {
 
         try {
-            return ResponseEntity.ok(paymentProofUseCase.findByIdLottery(id));
+            return ResponseEntity.ok(paymentProofUseCase.findByIdLottery(UUID.fromString(id)));
         } catch (Exception e) {
             log.error(e.toString());
             return ResponseEntity.badRequest().body(e.getMessage());
