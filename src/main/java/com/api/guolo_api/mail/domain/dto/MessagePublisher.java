@@ -23,6 +23,8 @@ public class MessagePublisher {
     }
 
     public void sendMessage(String message) {
-        rabbitTemplate.convertAndSend("admin", message);
+        rabbitTemplate.convertAndSend("62e4e0a9-6ac8-47c9-ac29-2a062ed96d91", message.toString());
+        rabbitTemplate.convertAndSend("notification-62e4e0a9-6ac8-47c9-ac29-2a062ed96d91", message.toString());
+
     }
 }
