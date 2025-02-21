@@ -23,8 +23,8 @@ public class MessagePublisher {
     }
 
     public void sendMessage(String message) {
-        rabbitTemplate.convertAndSend("62e4e0a9-6ac8-47c9-ac29-2a062ed96d91", message.toString());
-        rabbitTemplate.convertAndSend("notification-62e4e0a9-6ac8-47c9-ac29-2a062ed96d91", message.toString());
+        rabbitTemplate.convertAndSend("8c492d2f-7bfe-4d9b-9e42-0c2711031ae7", message.toString());
+        rabbitTemplate.convertAndSend("notification-8c492d2f-7bfe-4d9b-9e42-0c2711031ae7", message.toString());
 
     }
 }
