@@ -21,7 +21,6 @@ public class Controller {
     public void send(@RequestBody EmailRequest message) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
 
-
         messagePublisher.sendMessage(mapper.writeValueAsString(
                 message
         ));
