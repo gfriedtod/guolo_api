@@ -4,6 +4,8 @@ import com.api.guolo_api.adminMangement.domain.model.UserDto;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Builder
 @Data
 public class EmailRequest {
@@ -13,5 +15,6 @@ public class EmailRequest {
     private String message;
     private String from;
     private UserDto user;
+    private LocalDateTime date;
 
 }
