@@ -12,6 +12,6 @@ public class EmailRequest {
     private String subject;
     private String message;
     private String from;
-    private UserDto userDto;
+    private UserDto user;
 
 }
