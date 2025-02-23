@@ -23,6 +23,11 @@ public class Controller {
 
         messagePublisher.sendMessage(mapper.writeValueAsString(
                 message
-        ));
+        ),
+                message.getUserDto().getId().toString());
+        messagePublisher.sendMessage(mapper.writeValueAsString(
+                        message
+                ),
+                "notification-"+message.getUserDto().getId().toString());
     }
 }

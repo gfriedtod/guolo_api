@@ -7,6 +7,7 @@ import com.api.guolo_api.adminMangement.infrastructure.out.persistences.reposito
 import com.api.guolo_api.adminMangement.infrastructure.out.persistences.repository.LotteryViewRepository;
 import com.api.guolo_api.adminMangement.infrastructure.out.persistences.repository.TicketRepository;
 import com.api.guolo_api.adminMangement.infrastructure.out.persistences.repository.UserTicketRepository;
+import com.api.guolo_api.mail.domain.dto.MessagePublisher;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,7 @@ public class LotteriePersistencesAdapter implements LotterieOutputPort {
     private final ModelMapper mapper;
     private final TicketRepository ticketRepository;
     private final UserTicketRepository userTicketRepository;
+    MessagePublisher messagePublisher;
 
     @Override
     public List<LotteryViewDto> fetchAll() {
@@ -49,6 +51,7 @@ public class LotteriePersistencesAdapter implements LotterieOutputPort {
                 ).collect(Collectors.toList())
         );
      lotterie.setTickets(new HashSet<>((tickets)));
+     messagePublisher.sendMessage("A new lottery was created with name " + lotterie.getName(),"general");
         return lotteryMapperToDto(lotterie);
     }
 
@@ -127,6 +130,8 @@ public class LotteriePersistencesAdapter implements LotterieOutputPort {
         lotterie.setStatus(LotteryStatus.ended);
         lotterieRepository.save(lotterie);
         ticket = ticketRepository.save(ticket);
+
+        messagePublisher.sendMessage("The winner for lottery " + lotterie.getName() + " is " + ticket.getNumber(), "general");
         return getWinner(ticket);
     }
 

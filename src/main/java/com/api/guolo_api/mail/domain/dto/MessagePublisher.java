@@ -19,12 +19,14 @@ public class MessagePublisher {
 
     @Bean
     String declareQueue() {
-       return rabbitAdmin.declareQueue(new Queue("admin"));
+
+        rabbitAdmin.declareQueue(new Queue("general"));
+        return rabbitAdmin.declareQueue(new Queue("admin"));
     }
 
-    public void sendMessage(String message) {
-        rabbitTemplate.convertAndSend("8c492d2f-7bfe-4d9b-9e42-0c2711031ae7", message.toString());
-        rabbitTemplate.convertAndSend("notification-8c492d2f-7bfe-4d9b-9e42-0c2711031ae7", message.toString());
+    public void sendMessage(String message,String key) {
+        rabbitTemplate.convertAndSend(key, message);
+        rabbitTemplate.convertAndSend(key, message);
 
     }
 }
