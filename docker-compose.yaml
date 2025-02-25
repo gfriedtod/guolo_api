@@ -46,6 +46,9 @@ services:
     container_name: guolo_admin
     ports:
       - "5173:80"
+    environment:
+      - VITE_API_URL=http://37.60.239.221:8086
+      - VITE_WS_URL=ws://37.60.239.221:61613/ws
     depends_on:
       - backend
 
