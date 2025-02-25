@@ -5,6 +5,8 @@ services:
   rabbit-server:
     image: rabbitmq:3-management
     container_name: rabbitmqPaypro
+    command: >
+      bash -c "rabbitmq-plugins enable rabbitmq_web_stomp && rabbitmq-server"
     ports:
       - 5672:5672
       - 61613:15674
