@@ -53,5 +53,5 @@ services:
       - backend
 
 volumes:
-  postgres_data: # Déclare le volume pour PostgreSQL
+  postgres_data: # Déclarer le volume pour PostgreSQL
   init-scripts:
