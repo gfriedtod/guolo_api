@@ -44,7 +44,6 @@ services:
   frontend:
     image: "gfriedtod/guolo_admin:latest"
     build:
-      context: . # Ensure the context is set to the directory containing your Dockerfile
       args:
         - VITE_API_URL=http://37.60.239.221:8086
         - VITE_WS_URL=ws://37.60.239.221:61613/ws
