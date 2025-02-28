@@ -1,6 +1,7 @@
 package com.api.guolo_api.mail.domain.dto;
 
 import com.api.guolo_api.adminMangement.domain.model.UserDto;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Builder;
 import lombok.Data;
 
@@ -16,6 +17,6 @@ public class EmailRequest {
     private String from;
     private UserDto user;
     private String topic;
-    private LocalDateTime date;
+    private String date;
 
 }
