@@ -15,6 +15,7 @@ public class EmailRequest {
     private String message;
     private String from;
     private UserDto user;
+    private String topic;
     private LocalDateTime date;
 
 }

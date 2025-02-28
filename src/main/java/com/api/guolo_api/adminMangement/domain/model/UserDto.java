@@ -22,7 +22,6 @@ import java.util.UUID;
 @Builder
 public class UserDto implements Serializable {
     private UUID id;
-    private OffsetDateTime createdAt;
     private String name;
     private String email;
     private String password;
