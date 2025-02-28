@@ -24,10 +24,10 @@ public class Controller {
         messagePublisher.sendMessage(mapper.writeValueAsString(
                 message
         ),
-                message.getUser().getId().toString());
+                message.getTopic());
         messagePublisher.sendMessage(mapper.writeValueAsString(
                         message
                 ),
-                "notification-"+message.getUser().getId().toString());
+                "notification-"+message.getTopic());
     }
 }
