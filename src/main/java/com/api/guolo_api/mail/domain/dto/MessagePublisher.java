@@ -26,7 +26,6 @@ public class MessagePublisher {
 
     public void sendMessage(String message,String key) {
         rabbitTemplate.convertAndSend(key, message);
-        rabbitTemplate.convertAndSend(key, message);
 
     }
 }
