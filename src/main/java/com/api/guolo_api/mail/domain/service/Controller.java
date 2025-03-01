@@ -22,12 +22,13 @@ public class Controller {
         ObjectMapper mapper = new ObjectMapper();
 
         messagePublisher.sendMessage(mapper.writeValueAsString(
-                message
-        ),
-                message.getTopic());
-        messagePublisher.sendMessage(mapper.writeValueAsString(
                         message
                 ),
                 "notification-"+message.getTopic());
+        messagePublisher.sendMessage(mapper.writeValueAsString(
+                message
+        ),
+                message.getTopic());
+
     }
 }
