@@ -41,14 +41,14 @@ public class PaymentProofAdapter implements PaymentProofOutputPort {
                         .name(paymentProofDto.getName())
                 .build());
 
-       if(proof.getIdLottery().getStatus().equals(LotteryStatus.ended)){
+//       if(proof.getIdLottery().getStatus().equals(LotteryStatus.ended)){
            Winner winner = draw(proof.getIdLottery().getId());
            messagePublisher.sendMessage(
                    "A new proof as uploaded for the lottery " + proof.getIdLottery().getName(),
                    "notification-"+winner.getUserDto().getId().toString()
 
            );
-       }
+//       }
 
 
     }
