@@ -32,4 +32,8 @@ public class MessagePublisher {
 //        rabbitTemplate.convertAndSend(key, message);
 
     }
+
+    public void sendMessage(String message) {
+        rabbitTemplate.convertAndSend("general","", message);
+    }
 }

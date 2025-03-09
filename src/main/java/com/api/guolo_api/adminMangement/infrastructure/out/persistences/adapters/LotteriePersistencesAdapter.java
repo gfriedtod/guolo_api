@@ -51,7 +51,7 @@ public class LotteriePersistencesAdapter implements LotterieOutputPort {
                 ).collect(Collectors.toList())
         );
      lotterie.setTickets(new HashSet<>((tickets)));
-     messagePublisher.sendMessage("A new lottery was created with name " + lotterie.getName(),"general");
+     messagePublisher.sendMessage("A new lottery was created with name " + lotterie.getName());
         return lotteryMapperToDto(lotterie);
     }
 
@@ -131,7 +131,7 @@ public class LotteriePersistencesAdapter implements LotterieOutputPort {
         lotterieRepository.save(lotterie);
         ticket = ticketRepository.save(ticket);
 
-        messagePublisher.sendMessage("The winner for lottery " + lotterie.getName() + " is " + ticket.getNumber(), "general");
+        messagePublisher.sendMessage("The winner for lottery " + lotterie.getName() + " is " + ticket.getNumber(), "notification-"+lotterie.getId().toString());
         return getWinner(ticket);
     }
 
