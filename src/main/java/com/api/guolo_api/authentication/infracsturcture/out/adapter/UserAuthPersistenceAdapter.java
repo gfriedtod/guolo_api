@@ -36,6 +36,9 @@ public class UserAuthPersistenceAdapter implements UserOutputPort {
         user  = userRepository.findById(userDto.getId()).get();
         user.setName(userDto.getName());
         user.setEmail(userDto.getEmail());
+        user.setPhone(userDto.getPhone());
+        user.setLocation(userDto.getLocation());
+        user.setFirstname(userDto.getFirstname());
         return UserMapper.toDto(userRepository.save(user));
     }
 
