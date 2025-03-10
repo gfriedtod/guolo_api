@@ -4,6 +4,7 @@ import com.api.guolo_api.Entity.PaymentProof;
 import com.api.guolo_api.adminMangement.application.in.PaymentProofUseCase;
 import com.api.guolo_api.adminMangement.application.out.PaymentProofOutputPort;
 import com.api.guolo_api.adminMangement.domain.model.PaymentProofDto;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,7 @@ public class PaymentProofService implements PaymentProofUseCase {
      * @param paymentProofDto
      */
     @Override
-    public void save(PaymentProofDto paymentProofDto) {
+    public void save(PaymentProofDto paymentProofDto) throws JsonProcessingException {
         port.save(paymentProofDto);
     }
 
