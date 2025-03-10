@@ -1,8 +1,11 @@
 package com.api.guolo_api.mail.domain.dto;
 
 
+import com.rabbitmq.client.impl.AMQImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.amqp.core.AmqpAdmin;
+import org.springframework.amqp.core.Exchange;
+import org.springframework.amqp.core.ExchangeBuilder;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +23,8 @@ public class MessagePublisher {
     @Bean
     String declareQueue() {
 
-        rabbitAdmin.declareQueue(new Queue("general"));
+//        rabbitAdmin.declareQueue(new Queue("general"));
+        rabbitAdmin.declareExchange(ExchangeBuilder.fanoutExchange("general").build());
         return rabbitAdmin.declareQueue(new Queue("admin"));
     }
 
