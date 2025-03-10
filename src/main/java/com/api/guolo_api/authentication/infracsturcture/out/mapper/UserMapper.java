@@ -15,6 +15,10 @@ public class UserMapper {
                 .name(userDto.getName())
                 .email(userDto.getEmail())
                 .password(userDto.getPassword())
+                .phone(userDto.getPhone())
+                .location(userDto.getLocation())
+                .firstname(userDto.getFirstname())
+
                 .build();
     }
 
@@ -26,6 +30,10 @@ public class UserMapper {
                 .email(user.getEmail())
                 .password(user.getPassword())
                 .role(user.getRole())
+                .phone(user.getPhone())
+                .location(user.getLocation())
+                .firstname(user.getFirstname())
+
                 .build();
     }
 
@@ -35,6 +43,12 @@ public class UserMapper {
 //                .createdAt(OffsetDateTime.from(user.getCreatedAt()))
                 .name(user.getName())
                 .email(user.getEmail())
+                .phone(user.getPhone())
+                .location(user.getLocation())
+                .firstname(user.getFirstname())
+
+
+
 //                .password(user.getPassword())
 //                .role(user.getRole())
                 .build();

@@ -41,4 +41,17 @@ public class User {
  */
     @Column(name = "email", columnDefinition = "email")
     private String email;
+
+    @ColumnDefault("'+237678931247'")
+    @Column(name = "phone", length = Integer.MAX_VALUE)
+    private String phone;
+
+    @ColumnDefault("'douala'")
+    @Column(name = "location", length = Integer.MAX_VALUE)
+    private String location;
+
+    @ColumnDefault("'john'")
+    @Column(name = "firstname", length = Integer.MAX_VALUE)
+    private String firstname;
+
 }
