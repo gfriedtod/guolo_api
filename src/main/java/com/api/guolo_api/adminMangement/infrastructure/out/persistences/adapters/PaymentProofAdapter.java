@@ -7,7 +7,10 @@ import com.api.guolo_api.adminMangement.domain.model.TicketDto;
 import com.api.guolo_api.adminMangement.domain.model.UserDto;
 import com.api.guolo_api.adminMangement.domain.model.Winner;
 import com.api.guolo_api.adminMangement.infrastructure.out.persistences.repository.*;
+import com.api.guolo_api.mail.domain.dto.EmailRequest;
 import com.api.guolo_api.mail.domain.dto.MessagePublisher;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -33,7 +36,7 @@ public class PaymentProofAdapter implements PaymentProofOutputPort {
      * @param paymentProofDto
      */
     @Override
-    public void save(PaymentProofDto paymentProofDto) {
+    public void save(PaymentProofDto paymentProofDto) throws JsonProcessingException {
 
        PaymentProof proof = repository.save(PaymentProof.builder().
                         idLottery(Lotterie.builder().id(paymentProofDto.getIdLottery().getId()).build())
@@ -43,8 +46,12 @@ public class PaymentProofAdapter implements PaymentProofOutputPort {
 
 //       if(proof.getIdLottery().getStatus().equals(LotteryStatus.ended)){
            Winner winner = draw(proof.getIdLottery().getId());
-           messagePublisher.sendMessage(
-                   "A new proof as uploaded for the lottery " + proof.getIdLottery().getName(),
+        ObjectMapper mapper = new ObjectMapper();
+        var message  = mapper.writeValueAsString(
+                EmailRequest.builder().message("The winner for lottery " + proof.getIdLottery().getName() + " is " + winner.getUserDto().getName()).from("admin").to("").build()
+        );
+        messagePublisher.sendMessage(
+                 message,
                    "notification-"+winner.getUserDto().getId().toString()
 
            );
