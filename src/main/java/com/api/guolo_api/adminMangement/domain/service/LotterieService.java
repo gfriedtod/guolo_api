@@ -6,6 +6,7 @@ import com.api.guolo_api.adminMangement.domain.model.LotteryViewDto;
 import com.api.guolo_api.adminMangement.domain.model.LotterieDto;
 import com.api.guolo_api.adminMangement.domain.model.TicketDto;
 import com.api.guolo_api.adminMangement.domain.model.Winner;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class LotterieService implements LotterieUseCase {
     }
 
     @Override
-    public LotterieDto save(LotterieDto lotterieDto) {
+    public LotterieDto save(LotterieDto lotterieDto) throws JsonProcessingException {
         return outputPort.save(lotterieDto);
     }
 
@@ -42,7 +43,7 @@ public class LotterieService implements LotterieUseCase {
     }
 
     @Override
-    public Winner draw(UUID lotteryId) {
+    public Winner draw(UUID lotteryId) throws JsonProcessingException {
         return outputPort.draw(lotteryId);
     }
 }

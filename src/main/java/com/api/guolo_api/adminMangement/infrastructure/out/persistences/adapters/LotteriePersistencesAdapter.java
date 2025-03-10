@@ -7,7 +7,10 @@ import com.api.guolo_api.adminMangement.infrastructure.out.persistences.reposito
 import com.api.guolo_api.adminMangement.infrastructure.out.persistences.repository.LotteryViewRepository;
 import com.api.guolo_api.adminMangement.infrastructure.out.persistences.repository.TicketRepository;
 import com.api.guolo_api.adminMangement.infrastructure.out.persistences.repository.UserTicketRepository;
+import com.api.guolo_api.mail.domain.dto.EmailRequest;
 import com.api.guolo_api.mail.domain.dto.MessagePublisher;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -31,7 +34,7 @@ public class LotteriePersistencesAdapter implements LotterieOutputPort {
     }
 
     @Override
-    public LotterieDto save(LotterieDto lotterieDto) {
+    public LotterieDto save(LotterieDto lotterieDto) throws JsonProcessingException {
         System.out.println(lotterieDto.getTickets().toArray().length);
         var lotterie = lotteryMapperToEntity(lotterieDto);
         lotterie.setStatus(LotteryStatus.created);
@@ -51,7 +54,14 @@ public class LotteriePersistencesAdapter implements LotterieOutputPort {
                 ).collect(Collectors.toList())
         );
      lotterie.setTickets(new HashSet<>((tickets)));
-     messagePublisher.sendMessage("A new lottery was created with name " + lotterie.getName());
+        ObjectMapper mapper = new ObjectMapper();
+
+        var message  = mapper.writeValueAsString(
+                EmailRequest.builder().message("A new lottery was created with name " + lotterie.getName()).from("admin").to("").build()
+        );
+
+
+        messagePublisher.sendMessage(message);
         return lotteryMapperToDto(lotterie);
     }
 
@@ -114,7 +124,7 @@ public class LotteriePersistencesAdapter implements LotterieOutputPort {
     }
 
     @Override
-    public Winner draw(UUID lotteryId) {
+    public Winner draw(UUID lotteryId) throws JsonProcessingException {
 
        List<Ticket> tickets = ticketRepository.findByLotterie_IdAndLotterie_Status(lotteryId, LotteryStatus.created);
 
@@ -131,7 +141,12 @@ public class LotteriePersistencesAdapter implements LotterieOutputPort {
         lotterieRepository.save(lotterie);
         ticket = ticketRepository.save(ticket);
 
-        messagePublisher.sendMessage("The winner for lottery " + lotterie.getName() + " is " + ticket.getNumber(), "notification-"+lotterie.getId().toString());
+        ObjectMapper mapper = new ObjectMapper();
+        var message  = mapper.writeValueAsString(
+                EmailRequest.builder().message("The winner for lottery " + lotterie.getName() + " is " + ticket.getNumber()).from("admin").to("").build()
+        );
+
+        messagePublisher.sendMessage(message);
         return getWinner(ticket);
     }
 
